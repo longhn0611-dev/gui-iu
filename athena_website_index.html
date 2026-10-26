@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gửi Athena 💗</title>
+<style>
+* { box-sizing: border-box; }
+body {
+  margin: 0; min-height: 100vh; display: flex; align-items: center;
+  justify-content: center; overflow: hidden; font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #ffe1ec, #ffb6d0, #fff0f5); color: #d6336c;
+}
+.card {
+  width: min(90%, 420px); padding: 32px 22px; text-align: center;
+  border-radius: 28px; background: rgba(255,255,255,.92);
+  box-shadow: 0 15px 45px #d6336c30; position: relative; z-index: 2;
+}
+.heart { font-size: 72px; animation: beat 1s infinite; }
+h1 { font-size: 29px; margin: 12px 0; }
+p { font-size: 18px; line-height: 1.7; }
+.buttons {
+  display: flex; flex-wrap: wrap; justify-content: center; align-items: center;
+  gap: 12px; margin-top: 25px; min-height: 55px;
+}
+button {
+  border: 0; border-radius: 30px; padding: 14px 18px; font-size: 16px;
+  font-weight: bold; cursor: pointer; touch-action: manipulation;
+}
+#yes { color: white; background: #ff4d88; box-shadow: 0 5px 15px #ff4d8840; }
+#no { color: #9e4264; background: #f8e4ec; }
+#result { display: none; margin-top: 20px; font-size: 21px; font-weight: bold; line-height: 1.7; }
+.float {
+  position: fixed; bottom: -50px; pointer-events: none; z-index: 1;
+  animation: rise linear forwards;
+}
+@keyframes beat { 0%,100% { transform: scale(1); } 50% { transform: scale(1.15); } }
+@keyframes rise { to { transform: translateY(-115vh) rotate(25deg); opacity: 0; } }
+</style>
+</head>
+<body>
+<main class="card">
+  <div class="heart">💗</div>
+  <h1>Gửi Athena 💌</h1>
+  <p id="message">
+    Em yêu tha lỗi cho anh nhé 🥺<br>
+    Anh xin lỗi em nhiều lắm.<br>
+    Anh không muốn em buồn nữa ❤️
+  </p>
+  <div class="buttons" id="buttons">
+    <button id="yes">Tha lỗi cho anh 💕</button>
+    <button id="no">Không tha đâu 😝</button>
+  </div>
+  <div id="result" aria-live="polite"></div>
+</main>
+<script>
+const no = document.getElementById('no');
+const yes = document.getElementById('yes');
+const result = document.getElementById('result');
+const buttons = document.getElementById('buttons');
+function moveNoButton() {
+  const padding = 12;
+  const maxX = Math.max(padding, window.innerWidth - no.offsetWidth - padding);
+  const maxY = Math.max(padding, window.innerHeight - no.offsetHeight - padding);
+  no.style.position = 'fixed';
+  no.style.zIndex = '10';
+  no.style.left = (padding + Math.random() * (maxX - padding)) + 'px';
+  no.style.top = (padding + Math.random() * (maxY - padding)) + 'px';
+}
+no.addEventListener('mouseenter', moveNoButton);
+no.addEventListener('touchstart', function(event) {
+  event.preventDefault(); moveNoButton();
+}, { passive: false });
+no.addEventListener('click', function(event) {
+  event.preventDefault(); moveNoButton();
+});
+yes.addEventListener('click', function() {
+  document.getElementById('message').style.display = 'none';
+  buttons.style.display = 'none';
+  no.style.display = 'none';
+  result.style.display = 'block';
+  result.innerHTML =
+    'Anh yêu em nhiều lắm, Iu ơi! 💖🥹<br>' +
+    'Cảm ơn em đã cho anh cơ hội nhé! 💐<br>' +
+    'Mình vui vẻ bên nhau nha ❤️';
+  for (let i = 0; i < 35; i++) createHeart();
+});
+function createHeart() {
+  const heart = document.createElement('span');
+  heart.className = 'float';
+  heart.textContent = ['💗', '💕', '💖', '🌸', '💘'][Math.floor(Math.random() * 5)];
+  heart.style.left = Math.random() * 100 + 'vw';
+  heart.style.fontSize = (18 + Math.random() * 25) + 'px';
+  heart.style.animationDuration = (3 + Math.random() * 4) + 's';
+  document.body.appendChild(heart);
+  heart.addEventListener('animationend', () => heart.remove());
+}
+setInterval(createHeart, 650);
+</script>
+</body>
+</html>
